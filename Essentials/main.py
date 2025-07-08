@@ -34,6 +34,10 @@ def generate_x_post(topic: str) -> str:
         }
     )
 
+    response_test = response.json().get("output", [{}])[0].get("content", [{}])[0].get("text", "")
+
+    return response_test
+
 def main():
     # User input => AI (LLM) generates X post => Output post
     usr_input = input("What should the post be about? ")
