@@ -1,20 +1,32 @@
-import os  # Module to access environment variables
+import os  
 
-import requests  # Library to make HTTP requests to the OpenAI API
-from dotenv import load_dotenv  # To load environment variables from .env file
+import requests  
+from dotenv import load_dotenv  
 
-load_dotenv()  # Loads the .env file into your environment
+load_dotenv()  
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-def generate_x_post(usr_input: str) -> str:
+def generate_x_post(topic: str) -> str:
     # Call AI / LLM to generate a post based on user input
+    prompt = f"""
+    You are an expert social media manager. Generate a concise and engaging post for X (formerly Twitter).
+
+    Your task is to create a post that is concise, engaging, and suitable for X. The post should be no longer than 280 characters.
+
+    keep the tone professional and informative, while also being engaging and suitable for a wide audience.
+
+    Here's the topic provided by the user:
+    <topic>
+    {topic}
+    </topic>
+    """
     payload = {
-        "model": "...",  # Replace with actual model like 'gpt-3.5-turbo'
-        "input": "...",  # Replace with formatted message input
+        "model": "gpt-4o",  
+        "input": prompt,  
     }
     response = requests.post(
-        "https://api.openai.com/v1/chat/completions",
+        "https://api.openai.com/v1/responses",
         json=payload,
         headers={
             "Content-Type": "application/json",
